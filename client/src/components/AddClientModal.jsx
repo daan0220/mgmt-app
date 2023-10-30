@@ -5,15 +5,18 @@ import { ADD_CLIENT } from '../mutations/clientMutations';
 import { GET_CLIENTS } from '../queries/clientQueries';
 
 export default function AddClientModal() {
+    // useStateフックを使用して、名前、メール、電話の状態を管理
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
 
+  // useMutationフックを使用してADD_CLIENTミューテーションを実行
   const [addClient] = useMutation(ADD_CLIENT, {
     variables: { name, email, phone },
     update(cache, { data: { addClient } }) {
       const { clients } = cache.readQuery({ query: GET_CLIENTS });
-
+      
+      // クライアントのキャッシュを更新
       cache.writeQuery({
         query: GET_CLIENTS,
         data: { clients: [...clients, addClient] },
@@ -21,20 +24,25 @@ export default function AddClientModal() {
     },
   });
 
+  // フォームが送信されたときの処理
   const onSubmit = (e) => {
     e.preventDefault();
 
+    // 名前、メール、電話のどれかが空白の場合、アラートを表示
     if (name === '' || email === '' || phone === '') {
       return alert('Please fill in all fields');
     }
 
+    // addClientミューテーションを実行してクライアントを追加
     addClient(name, email, phone);
 
+    // フォームをクリア
     setName('');
     setEmail('');
     setPhone('');
   };
 
+    // モーダルとモーダルのトリガーボタンをレンダリング
   return (
     <>
       <button

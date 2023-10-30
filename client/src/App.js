@@ -5,10 +5,14 @@ import Home from './pages/Home';
 import Project from './pages/Project';
 import NotFound from './pages/NotFound';
 
+// アプリケーションが効率的に動作し、データが正しく更新されるために重要な部分
+// Apollo Clientはキャッシュを使用して、GraphQLクエリの結果を一時的に保存し、再利用できるようにする
 const cache = new InMemoryCache({
+  // データの統合（マージ）方法を指定するために使用
   typePolicies: {
     Query: {
       fields: {
+        // existingは既存のキャッシュ内のデータで、incomingは新しく取得したデータ。新しいデータが受信された場合、古いデータ（existing）は置き換えられる
         clients: {
           merge(existing, incoming) {
             return incoming;
@@ -29,6 +33,7 @@ const client = new ApolloClient({
   cache,
 });
 
+// エントリーポイントとなるコンポーネント
 function App() {
   return (
     <>

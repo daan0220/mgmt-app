@@ -3,6 +3,8 @@ import { useQuery } from '@apollo/client'
 import ProjectCard from './ProjectCard'
 import { GET_PROJECTS } from '../queries/projectQueries'
 
+// Apollo Clientを使用してGraphQLサーバーからプロジェクトデータを取得し、データを表示する
+
 
 export default function Projects() {
   const { loading, error, data } = useQuery(GET_PROJECTS)

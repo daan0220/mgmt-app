@@ -4,9 +4,11 @@ import { GET_PROJECT } from "../queries/projectQueries";
 import { UPDATE_PROJECT } from "../mutations/projectMutations";
 
 export default function EditProjectForm({ project }) {
+    // useStateフックを使用して、プロジェクトの名前、説明、ステータスの状態を管理
   const [name, setName] = useState(project.name);
   const [description, setDescription] = useState(project.description);
   const [status, setStatus] = useState(() => {
+        // プロジェクトのステータスを選択肢に変換
     switch (project.status) {
       case "Not Started":
         return "new";
@@ -18,19 +20,19 @@ export default function EditProjectForm({ project }) {
         throw new Error(`Unknown status: ${project.status}`);
     }
   });
-
+  // useMutationフックを使用してUPDATE_PROJECTミューテーションを宣言
   const [updateProject] = useMutation(UPDATE_PROJECT, {
-    variables: { id: project.id, name, description, status },
-    refetchQueries: [{ query: GET_PROJECT, variables: { id: project.id } }],
+    variables: { id: project.id, name, description, status },// ミューテーションの変数を指定
+    refetchQueries: [{ query: GET_PROJECT, variables: { id: project.id } }],// ミューテーション後にクエリを再実行してデータを更新
   });
 
   const onSubmit = (e) => {
     e.preventDefault();
-
+    // 名前、説明、ステータスのいずれかが空白の場合、アラートが表示されます
     if (!name || !description || !status) {
       return alert("Please fill out all fields");
     }
-
+    // updateProjectミューテーションを実行してプロジェクトを更新
     updateProject(name, description, status);
   };
 

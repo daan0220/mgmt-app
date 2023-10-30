@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client';
 
+// プロジェクト一覧を取得するGraphQLクエリの定義
 const GET_PROJECTS = gql`
   query getProjects {
     projects {
@@ -10,6 +11,7 @@ const GET_PROJECTS = gql`
   }
 `;
 
+// 特定のプロジェクトの詳細情報を取得するGraphQLクエリの定義
 const GET_PROJECT = gql`
   query getProject($id: ID!) {
     project(id: $id) {

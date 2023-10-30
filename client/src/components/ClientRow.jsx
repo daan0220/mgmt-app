@@ -8,11 +8,12 @@ export default function ClientRow( {client} ) {
         variables: { id: client.id },
         // refetchQueries: [{ query: GET_CLIENTS }],
         update(cache, { data: { deleteClient } }) { 
+            // クライアント一覧をキャッシュから取得
             const { clients } = cache.readQuery({ query:
             GET_CLIENTS });
             cache.writeQuery({
                 query: GET_CLIENTS,
-                data: { clients: clients.filter(client => client.id !== deleteClient.id) }
+                data: { clients: clients.filter(client => client.id !== deleteClient.id) }// 削除されたクライアントを除外してデータを更新
             })
         }
     });

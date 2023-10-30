@@ -7,14 +7,15 @@ import { useQuery } from '@apollo/client';
 import { GET_PROJECT } from '../queries/projectQueries';
 
 export default function Project() {
-  const { id } = useParams();
-  const { loading, error, data } = useQuery(GET_PROJECT, { variables: { id } });
+  const { id } = useParams();// URLパラメータからプロジェクトのIDを取得
+  const { loading, error, data } = useQuery(GET_PROJECT, { variables: { id } });// GraphQLクエリを実行してプロジェクトデータを取得
 
-  if (loading) return <Spinner />;
-  if (error) return <p>Something Went Wrong</p>;
+  if (loading) return <Spinner />;// データがロード中の場合、ローディングスピナーを表示
+  if (error) return <p>Something Went Wrong</p>;// エラーが発生した場合、エラーメッセージを表示
 
   return (
     <>
+     {/* データがロード済みでエラーが発生していない場合にコンポーネントを描画 */}
       {!loading && !error && (
         <div className='mx-auto w-75 card p-5'>
           <Link to='/' className='btn btn-light btn-sm w-25 d-inline ms-auto'>

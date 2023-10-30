@@ -1,5 +1,7 @@
 import { gql } from '@apollo/client';
 
+// ミューテーションクエリは、Apollo Clientを使用してGraphQLサーバーに送信され、データの作成と削除の操作を実行
+
 
 const ADD_CLIENT = gql`
     mutation addClient($name: String!, $email: String!,
